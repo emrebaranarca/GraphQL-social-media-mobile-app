@@ -18,6 +18,6 @@ export class CreateUserInput{
     @MinLength(6)
     password:string
 
-    @Field({nullable:false})
-    bio?:string
+    @Field({ nullable: true })
+    bio?: string;
 }

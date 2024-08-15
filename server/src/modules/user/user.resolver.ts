@@ -12,7 +12,7 @@ export class UserResolver{
     @Query(() => [User])
     async users(): Promise<User[]> {
       try {
-        return this.userService.findAll();
+        return await this.userService.findAll()
       } catch (error) {
         throw new Error(error.message)
       }
@@ -21,8 +21,7 @@ export class UserResolver{
     @Query(()=>User)
     async user(@Args('userId') userId:string):Promise<User>{
         try {
-            return await this.userService.findOne(userId
-            )
+            return await this.userService.findOne(userId)
         } catch (error) {
             throw new Error(error.message)
         }

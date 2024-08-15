@@ -29,12 +29,16 @@ export class UserRepository{
 
     async createUser(createUserInput:CreateUserInput):Promise<User>{
         try {
-            return await this.userModel.create(createUserInput)
+             const user=new this.userModel(createUserInput)
+             await user.save()
+             return user
         } catch (error) {
             throw new Error(error.message)
         }
     }
 
-
-    
 }
+
+
+
+

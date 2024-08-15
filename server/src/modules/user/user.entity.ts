@@ -21,8 +21,8 @@ export class User extends Document{
   @Field()
   password: string;
 
-  @Prop({required:false})
-  @Field()
+  @Prop({ required: false }) // Make sure Mongoose doesn't require this
+  @Field({ nullable: true }) // Make bio nullable in GraphQL schema
   bio?: string;
 
   @Prop({ default: Date.now })
