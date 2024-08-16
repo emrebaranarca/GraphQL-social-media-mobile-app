@@ -15,6 +15,9 @@ import { UserModule } from '../user/user.module';
     CommentService,
     CommentRepository,
     CommentResolver
+  ],
+  exports:[
+    CommentService
   ]
 })
 export class CommentModule {}

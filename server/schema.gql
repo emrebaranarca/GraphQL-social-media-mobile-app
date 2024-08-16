@@ -28,6 +28,7 @@ type Query {
   user(userId: String!): User!
   comments: [Comment!]!
   comment(id: String!): Comment!
+  commentsByUser(id: String!): [Comment!]!
 }
 
 type Mutation {

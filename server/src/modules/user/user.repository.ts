@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import { Model } from "mongoose";
+import { Model, Types } from "mongoose";
 import {User} from './user.entity'
 import { CreateUserInput } from "./DTOs/create-user.input";
 
@@ -35,6 +35,12 @@ export class UserRepository{
         } catch (error) {
             throw new Error(error.message)
         }
+    }
+
+    async findByIds(userIds: string[]): Promise<User[]> {
+        return this.userModel.find({
+          '_id': { $in: userIds.map(id => new Types.ObjectId(id)) }
+        }).exec();
     }
 
 }

@@ -35,4 +35,8 @@ export class UserService {
             throw new Error(error.message)
         }
     }
+
+    async findByIds(userIds: string[]): Promise<User[]> {
+        return this.userRepository.findByIds(userIds);
+    }
 }

@@ -41,4 +41,12 @@ export class CommentService {
         }
     }
 
+    async findByIds(commentIds: string[]): Promise<Comment[]> {
+        try {
+            return this.commentRepository.findByIds(commentIds);
+        } catch (error) {
+            throw new Error(error.message)
+        }
+    }
+
 }

@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from '@nestjs/mongoose';
 import { Comment } from './comment.entity';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { CreateCommentInput } from "./DTOs/create-comment.input";
 
 @Injectable()
@@ -15,7 +15,7 @@ export class CommentRepository{
         try {
             const comment=new this.commentModel(createCommentInput)
             await comment.save()
-            return await comment.populate('user')
+            return await comment
         } catch (error) {
             throw new Error(error.message)
         }
@@ -44,6 +44,12 @@ export class CommentRepository{
             throw new Error(error.message)
         }
     }
+
+    async findByIds(commentIds: string[]): Promise<Comment[]> {
+        return this.commentModel.find({
+          '_id': { $in: commentIds.map(id => new Types.ObjectId(id)) }
+        }).exec();
+      }
 
 
 }
