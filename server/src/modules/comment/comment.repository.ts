@@ -47,9 +47,9 @@ export class CommentRepository{
 
     async findByIds(commentIds: string[]): Promise<Comment[]> {
         return this.commentModel.find({
-          '_id': { $in: commentIds.map(id => new Types.ObjectId(id)) }
+          '_id': { $in: commentIds }
         }).exec();
-      }
+    }
 
 
 }

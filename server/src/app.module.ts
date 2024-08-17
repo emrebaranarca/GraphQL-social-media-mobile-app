@@ -23,7 +23,7 @@ import { ApolloDriver } from '@nestjs/apollo';
     ),
     ConfigModule.forRoot(),
     UserModule,
-    LikeModule,
+    PostModule,
     CommentModule
   ],
   controllers: [],

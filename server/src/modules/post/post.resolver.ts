@@ -15,13 +15,13 @@ export class PostResolver {
         private readonly commentService: CommentService
     ) {}
 
-    //!post listele
+    // //!post listele
     @Query(() => [Post])
     async posts(): Promise<Post[]> {
         return this.postService.findAll();
     }
 
-    //!id ye göre post al
+    // //!id ye göre post al
     @Query(() => Post)
     async post(@Args('postId') postId: string): Promise<Post> {
         return this.postService.findOne(postId);
@@ -35,30 +35,31 @@ export class PostResolver {
         return this.postService.createPost(createPostInput);
     }   
 
-    // @ResolveField(() => User)
-    // async author(@Parent() post: Post): Promise<User> {
-    //     return this.userService.findOne(post.author.toString());
-    // }
+    @ResolveField(() => User)
+    async author(@Parent() post: Post): Promise<User> {
+        return this.userService.findOne(post.author._id.toString());
+    }
 
-    // @ResolveField(() => [Comment])
-    // async comments(@Parent() post: Post): Promise<Comment[]> {
-    //     const commentIds = post.comments.map(id => id.toString());
-    //     return this.commentService.findByIds(commentIds);
-    // }
+    @ResolveField(() => [Comment])
+    async comments(@Parent() post: Post): Promise<Comment[]> {
+      const commentIds = post.comments.map(id => id.toString());
+      return this.commentService.findByIds(commentIds);
+    }
 
-    // @ResolveField(() => [User])
-    // async likes(@Parent() post: Post): Promise<User[]> {
-    //     const userIds = post.likes.map(id => id.toString());
-    //     return this.userService.findByIds(userIds);
-    // }
+    @ResolveField(() => [User])
+    async likes(@Parent() post: Post): Promise<User[]> {
+        const userIds = post.likes.map(id => id.toString());
+        console.log(post.likes.length);
+        return this.userService.findByIds(userIds);
+    }
 
-    //! kullanıcının postu
+    // //! kullanıcının postu
     @Query(() => [Post])
     async postsByAuthor(@Args('authorId') authorId: string): Promise<Post[]> {
         return this.postService.findPostsByAuthorId(authorId);
     }
 
-    //!comment ekleme
+    // //!comment ekleme
     @Mutation(() => Post)
     async addComment(
         @Args('postId') postId: string,
@@ -67,7 +68,7 @@ export class PostResolver {
         return this.postService.addComment(postId, commentId);
     }
 
-    //!like ekleme
+    // //!like ekleme
     @Mutation(() => Post)
     async addLike(
         @Args('postId') postId: string,

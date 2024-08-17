@@ -23,9 +23,21 @@ type Comment {
   createdAt: DateTime!
 }
 
+type Post {
+  _id: ID!
+  content: String!
+  author: User!
+  comments: [Comment!]
+  likes: [User!]
+  createdAt: DateTime!
+}
+
 type Query {
   users: [User!]!
   user(userId: String!): User!
+  posts: [Post!]!
+  post(postId: String!): Post!
+  postsByAuthor(authorId: String!): [Post!]!
   comments: [Comment!]!
   comment(id: String!): Comment!
   commentsByUser(id: String!): [Comment!]!
@@ -33,6 +45,10 @@ type Query {
 
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
+  createPost(createPostInput: CreatePostInput!): Post!
+  addComment(postId: String!, commentId: String!): Post!
+  addLike(postId: String!, userId: String!): Post!
+  removeLike(postId: String!, userId: String!): Post!
   createComment(createCommentInput: CreateCommentInput!): Comment!
 }
 
@@ -41,6 +57,11 @@ input CreateUserInput {
   email: String!
   password: String!
   bio: String
+}
+
+input CreatePostInput {
+  content: String!
+  author: String!
 }
 
 input CreateCommentInput {

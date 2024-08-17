@@ -35,7 +35,7 @@ export class CommentResolver{
 
     @ResolveField(() => User)
     async user(@Parent() comment: Comment): Promise<User> {
-        return this.userService.findOne(comment.user._id.toString());
+        return this.userService.findOne(comment.user.toString());
     }
 
     @Query(()=>[Comment])

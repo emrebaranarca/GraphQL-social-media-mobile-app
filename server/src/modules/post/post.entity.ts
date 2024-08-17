@@ -18,11 +18,11 @@ export class Post extends Document {
   @Prop({ type: Types.ObjectId, ref: 'User', required: true })
   author: User | Types.ObjectId;
 
-  @Field(() => [Comment], { nullable: 'items' })
+  @Field(() => [Comment], { nullable: true })
   @Prop({ type: [{ type: Types.ObjectId, ref: 'Comment' }] })
   comments: Comment[] | Types.ObjectId[];
 
-  @Field(() => [User])
+  @Field(() => [User],{nullable:true})
   @Prop({ type: [{ type: Types.ObjectId, ref: 'User' }] })
   likes: User[] | Types.ObjectId[];
 
