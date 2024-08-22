@@ -9,3 +9,18 @@ export const CREATE_USER = gql`
     }
   }
 `;
+
+
+export const CREATE_POST = gql`
+  mutation CreatePost($createPostInput: CreatePostInput!) {
+    createPost(createPostInput: $createPostInput) {
+      _id
+      content
+      author {
+        _id
+        username
+      }
+      createdAt
+    }
+  }
+`;

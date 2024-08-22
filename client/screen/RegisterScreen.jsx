@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity, StyleSheet, Text, SafeAreaView, KeyboardAvoidingView, Platform } from 'react-native';
+import { Alert,View, TextInput, TouchableOpacity, StyleSheet, Text, SafeAreaView, KeyboardAvoidingView, Platform } from 'react-native';
 import { useMutation } from '@apollo/client';
 import { CREATE_USER } from '../graphql/mutations';
+import { useNavigation } from '@react-navigation/native';
 
 const RegisterScreen = () => {
   const [username, setUsername] = useState('');
@@ -10,10 +11,28 @@ const RegisterScreen = () => {
   const [bio, setBio] = useState('');
 
   const [createUser, { loading }] = useMutation(CREATE_USER);
+  const navigation = useNavigation();
 
   const handleRegister = async () => {
-    // ... (keep the existing logic)
+    try {
+      const { data } = await createUser({
+        variables: {
+          createUserInput: { username, email, password, bio },
+        },
+      });
+      console.log('User created:', data.createUser);
+      Alert.alert('Success', 'User registered successfully!', [
+        {
+          text: 'OK',
+          onPress: () => navigation.navigate('CreatePost', { userId: data.createUser._id })
+        }
+      ]);
+    } catch (error) {
+      console.error('Registration error:', error);
+      Alert.alert('Error', error.message);
+    }
   };
+
 
   return (
     <SafeAreaView style={styles.container}>
