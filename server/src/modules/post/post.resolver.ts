@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, ResolveField, Parent } from "@nestjs/graphql";
+import { Resolver, Query, Mutation, Args, ResolveField, Parent, Int } from "@nestjs/graphql";
 import { Post } from "./post.entity";
 import { PostService } from "./post.service";
 import { CreatePostInput } from "./DTOs/create-post.input";
@@ -34,6 +34,11 @@ export class PostResolver {
     ): Promise<Post> {
         return this.postService.createPost(createPostInput);
     }   
+
+    @ResolveField(() => Int)
+    async likeCount(@Parent() post: Post): Promise<number> {
+        return this.postService.getLikeCount(post._id.toString());
+    }
 
     @ResolveField(() => User)
     async author(@Parent() post: Post): Promise<User> {

@@ -7,6 +7,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { MongooseConfigService } from './config/mongoose.config.service';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver } from '@nestjs/apollo';
+import { CacheModule } from './cache/cache.module';
 
 @Module({
   imports: [
@@ -23,7 +24,8 @@ import { ApolloDriver } from '@nestjs/apollo';
     ConfigModule.forRoot(),
     UserModule,
     PostModule,
-    CommentModule
+    CommentModule,
+    CacheModule
   ],
   controllers: [],
   providers: [],
