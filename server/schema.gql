@@ -30,6 +30,7 @@ type Post {
   comments: [Comment!]
   likes: [User!]
   createdAt: DateTime!
+  likeCount: Int
 }
 
 type Query {

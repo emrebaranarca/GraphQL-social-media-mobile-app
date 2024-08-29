@@ -1,4 +1,4 @@
-import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { ObjectType, Field, ID, Int } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 import { User } from '../user/user.entity';
@@ -29,6 +29,9 @@ export class Post extends Document {
   @Field()
   @Prop({ default: Date.now })
   createdAt: Date;
+
+  @Field(() => Int,{nullable:true})
+  likeCount: number;
 }
 
 export const PostSchema = SchemaFactory.createForClass(Post);
